@@ -1,0 +1,12 @@
+<div class="publicaciones-container">
+  <div *ngFor="let publicacion of publicaciones" class="publicacion-card">
+    <div class="publicacion-header">
+      <h2 class="publicacion-titulo">{{ publicacion.titulo }}</h2>
+      <p class="publicacion-autor">Por: {{ publicacion.autor }}</p>
+      <p class="publicacion-fecha">{{ publicacion.fechaPublicacion }}</p>
+    </div>
+    <div class="publicacion-body">
+      <p class="publicacion-contenido">{{ publicacion.contenido }}</p>
+    </div>
+  </div>
+</div>

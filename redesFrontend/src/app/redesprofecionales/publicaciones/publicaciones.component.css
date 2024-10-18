@@ -1,0 +1,68 @@
+/* Aplica un fondo a toda la página */
+body {
+  background-color: #000000;  
+  margin: 5;
+  padding: 0;
+  font-family: 'Arial', sans-serif; /* Fuente global */
+}
+
+/* Aplica un color de fondo a los contenedores de publicaciones */
+.publicaciones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px; /* Espaciado entre publicaciones */
+  max-width: 800px;
+  margin: 0 auto; /* Centramos el contenido */
+  padding: 20px;
+}
+
+/* Estilo de cada publicación */
+.publicacion-card {
+  background-color: #cca5cc;  /* Fondo morado claro */
+  border: 1px solid #000000;
+  border-radius: 25px;
+  padding: 20px;
+  box-shadow: 1px 3px 6px rgb(0, 0, 0);
+  transition: box-shadow 0.5s ease;
+}
+
+/* Hover para hacer el efecto cuando el usuario pasa el mouse */
+.publicacion-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Encabezado de la publicación */
+.publicacion-header {
+  margin-bottom: 0px;
+  border-bottom: 1px solid #000000;
+  padding-bottom: 0px;
+}
+
+.publicacion-titulo {
+  font-size: 30px;
+  margin: 15px;
+  color: #000000;
+}
+
+.publicacion-autor {
+  font-size: 18px;
+  color: #000000;
+  margin: 0;
+}
+
+.publicacion-fecha {
+  font-size: 12px;
+  color: #000000;
+  margin: 2px 0 0 0;
+}
+
+/* Cuerpo de la publicación */
+.publicacion-body {
+  margin-top: 5px;
+}
+
+.publicacion-contenido {
+  font-size: 18px;
+  line-height: 1.2;
+  color: #000000;
+}
