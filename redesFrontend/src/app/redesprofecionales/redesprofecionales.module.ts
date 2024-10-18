@@ -12,7 +12,8 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule  
+    AppRoutingModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
