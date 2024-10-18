@@ -2,7 +2,8 @@ from django.urls import path
 from .views import PostApiView
 
 urlpatterns = [
-    path('crear-publicacion',PostApiView.as_view()),
-    path('list',PostApiView.as_view()),
-    path('actualizar-publicacion/<int:pkid>',PostApiView.as_view(),name='actualizar_publicacion')
+    # List will be used for getting a list and posting new objects
+    path('list', PostApiView.as_view()),
+    # List/pk will be used for getting a single object, deleting and updating it
+    path('list/<int:pk>', PostApiView.as_view()),
 ]
