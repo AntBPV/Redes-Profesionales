@@ -13,11 +13,11 @@ class ProfileApiView(APIView):
     def get(self,request, pk=None, *args, **kwargs):
         # If it gets a primary key, it will return a single profile
         if pk:
-            profile = Profile.objects.get(id=pk, active=True)
+            profile = Profile.objects.get(id=pk, active=True, public_state=True)
             serializer = ProfileSerializer(profile)
         # If it doesn't get a primary key, it will return a list of all profiles
         else:
-            profiles = Profile.objects.filter(active = True)
+            profiles = Profile.objects.filter(active = True, public_state = True)
             serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)
     
@@ -29,6 +29,8 @@ class ProfileApiView(APIView):
             'personal_data': request.data.get('personal_data'),
             'professional_data': request.data.get('professional_data'),
             'educational_data': request.data.get('educational_data'),
+            'picture': request.data.get('picture'),
+            'banner': request.data.get('banner'),
         }
         serializer = ProfileSerializer(data=data)
         
@@ -57,6 +59,35 @@ class ProfileApiView(APIView):
     def delete(self,request, pk):
         profile_to_delete = Profile.objects.get(id=pk)
         profile_to_delete.active = False
+        profile_to_delete.public_state = False
         profile_to_delete.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+class ProfileApiPrivateView(APIView):
+    # Get method for personal profiles. Returns user profile
+    def get(self, request, *args, **kwargs):
+        if(request.user.is_authenticated):
+            # If the user is authenticated, it will return the user profile
+            profile = Profile.objects.get(user=request.user, active=True)
+            if(profile is not None):
+                serializer = ProfileSerializer(profile)
+                return Response(serializer.data)
+            else:
+                # If the user is not the profile owner, it will return an error
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            # If the user is not authenticated, it will return an error
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+class ProfileApiAdminView(APIView):
+    # Get Method for All Profiles (Active or not, Public or not)
+    def get(self, request, pk=None, *args, **kwargs):
+        # If it gets a primary key, it will return a single profile
+        if pk:
+            profile = Profile.objects.get(id=pk)
+            serializer = ProfileSerializer(profile)
+        # If it doesn't get a primary key, it will return a list of all profiles
+        else:
+            profiles = Profile.objects.all()
+            serializer = ProfileSerializer(profiles, many=True)
+        return Response(serializer.data)

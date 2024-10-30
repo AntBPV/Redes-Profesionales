@@ -21,10 +21,14 @@ class EducationalData(models.Model):
     certification = models.CharField(max_length=120)
     year = models.DateField(default=date.today)
     
+    
 class Profile(models.Model):
     user = models.ForeignKey(User, default=1, null=True, on_delete = models.SET_NULL, db_constraint=True)
     name = models.CharField(max_length=120)
     personal_data = models.ForeignKey(PersonalData, on_delete = models.CASCADE, related_name="profile", db_constraint = True)
     professional_data = models.ForeignKey(ProfessionalData, on_delete = models.CASCADE, related_name="profile", db_constraint=True)
     educational_data = models.ForeignKey(EducationalData, on_delete = models.CASCADE, related_name="profile", db_constraint=True)
+    picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    banner = models.ImageField(upload_to='profile_banners/', blank=True, null=True)
+    public_state = models.BooleanField(default=True)
     active = models.BooleanField(default=True)

@@ -15,11 +15,11 @@ class PostApiView(APIView):
     def get(self,request, pk=None, *args, **kwargs):
         # If it gets a primary key, it will return a single post
         if pk:
-            post = PostModel.objects.get(id=pk, active=True)
+            post = PostModel.objects.get(id=pk, active=True, public_state=True)
             serializer = post_serializer(post)
         # If it doesn't get a primary key, it will return a list of all posts
         else:
-            posts = PostModel.objects.filter(active = True)
+            posts = PostModel.objects.filter(active = True, public_state = True)
             serializer = post_serializer(posts, many=True)
         return Response(serializer.data)
     
@@ -28,7 +28,7 @@ class PostApiView(APIView):
     def post(self,request,*args,**kwargs):
         data = {
             'user': request.data.get('user'),
-            'title': request.data.get('title'),
+            'image': request.data.get('image'),
             'text': request.data.get('text'),
         }
         serializer = post_serializer(data=data)
@@ -59,5 +59,30 @@ class PostApiView(APIView):
     def delete(self,request, pk):
         post_to_delete = PostModel.objects.get(id=pk)
         post_to_delete.active = False
+        post_to_delete.public_state = False
         post_to_delete.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class PostApiPrivateView(APIView):
+    def get(self, request, *args, **kwargs):
+        if(request.user.is_authenticated):
+            posts = PostModel.objects.filter(user = request.user, active=True)
+            if(posts is not None):
+                serializer = post_serializer(posts, many=True)
+                return Response(serializer.data)
+            else:
+                return Response(status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)    
+
+class PostApiAdminView(APIView):
+    def get(self, request, pk=None, *args, **kwargs):
+        # If it gets a primary key, it will return a single post
+        if pk:
+            post = PostModel.objects.get(id=pk)
+            serializer = post_serializer(post)
+        # If it doesn't get a primary key, it will return a list of all posts
+        else:
+            posts = PostModel.objects.all()
+            serializer = post_serializer(posts, many=True)
+        return Response(serializer.data)
