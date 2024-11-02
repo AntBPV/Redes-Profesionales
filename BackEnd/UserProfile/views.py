@@ -44,11 +44,11 @@ class ProfileApiView(APIView):
     # Put method will update an existing profile
     def put(self, request, pk):
         myPost = Profile.objects.get(id=pk,active=True)
-        serializer = ProfileSerializer(myPost, data=request.data)
+        serializer = ProfileSerializer(myPost, data=request.data, partial=True)
         
         # Similar validation as the post method
         # This will validate the data and return the correct response
-        if serializer.is_valid():
+        if serializer.is_valid(): 
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         # If the data is invalid, it will return an error
