@@ -3,7 +3,8 @@ import {InicioComponent} from './pagina-redes-profesionales/inicio/inicio.compon
 import {IniciarSesionComponent} from './pagina-redes-profesionales/iniciar-sesion/iniciar-sesion.component';
 import { Component } from '@angular/core';
 import {RegistrarseComponent} from './pagina-redes-profesionales/registrarse/registrarse.component';
-import { PruebaComponent } from './pagina-redes-profesionales/prueba/prueba.component';
+
+import { InicioPerfilComponent } from './pagina-redes-profesionales/inicio-perfil/inicio-perfil.component';
 export const routes: Routes = [
     {
         path:'',
@@ -17,9 +18,10 @@ export const routes: Routes = [
         path:'Registrarse',
         component:RegistrarseComponent
     },
-    {
-        path:'prueba',
-        component:PruebaComponent
-    }
+
+    {   path: 'publicacion',
+        component:InicioPerfilComponent 
+    },
+
 
 ];

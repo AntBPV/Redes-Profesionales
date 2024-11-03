@@ -7,6 +7,7 @@ import { redesProfesionalesService } from '../redes-profesionales.service';
 import { user } from '../redes-profesionales';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { iniciarSesionService } from './iniciar-sesion.service';
 
 @Component({
   selector: 'app-iniciar-sesion',
@@ -23,7 +24,8 @@ export class IniciarSesionComponent implements OnInit {
   constructor(
     private routerPath: Router, 
     private redesProfesionalesService: redesProfesionalesService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private iniciarSesionService:iniciarSesionService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -36,6 +38,7 @@ export class IniciarSesionComponent implements OnInit {
   }
 
   onSubmit() {
+
     this.errorLogin = '';
     this.loginExitoso = false;
 
@@ -61,11 +64,13 @@ export class IniciarSesionComponent implements OnInit {
             );
 
             if (usuarioEncontrado) {
+
+              this.iniciarSesionService.setUsuarioActual(usuarioEncontrado);
               this.loginExitoso = true; 
               localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
               
               setTimeout(() => {
-                this.routerPath.navigate(['/prueba']); 
+                this.routerPath.navigate(['/publicacion']); 
               }, 2000); 
             } else {
               this.errorLogin = 'Credenciales incorrectas. Por favor, intenta de nuevo.';
