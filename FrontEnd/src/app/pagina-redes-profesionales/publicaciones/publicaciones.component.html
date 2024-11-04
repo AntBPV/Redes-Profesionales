@@ -1,0 +1,25 @@
+
+<header class="header">
+    <div class="header-content">
+      <h1 class="header-title">Publicaciones</h1>
+      <nav class="header-buttons">
+        <button routerLink="/crearPublicaciones" class="action-button login-button">Crear Publicación</button>
+        <button routerLink="/inicioPerfil" class="action-button register-button">Inicio</button>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <section class="publicaciones-container">
+      <article class="publicacion" *ngFor="let publicacion of publicaciones">
+        <div class="perfil-info">
+          <img [src]="publicacion.fotoUsuario" alt="Foto de perfil" class="foto-perfil" />
+          <div class="info">
+            <span class="nombre-perfil">{{ publicacion.nombreUsuario }}</span>
+          </div>
+        </div>
+        <p class="contenido-publicacion">{{ publicacion.contenido }} </p>
+      </article>
+    </section>
+  </main>
+    

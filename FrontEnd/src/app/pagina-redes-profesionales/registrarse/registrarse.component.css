@@ -1,0 +1,252 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  /* Header Styles */
+  .header {
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+  }
+  
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+  }
+  
+  .header-title {
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 0.5s ease-out;
+  }
+  
+  .back-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .back-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  /* Container del formulario */
+  .login-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    perspective: 1000px;
+  }
+  
+  .login-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transform-style: preserve-3d;
+    animation: cardEntrance 1.5s ease-out;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .login-header {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  .login-header h2 {
+    color: #2d3748;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-right: 20px;
+  }
+  
+  .form-group {
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+    transform-origin: left;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    outline: none;
+  }
+  
+  .error-message {
+    color: #e53e3e;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  .submit-button {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .submit-button:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  }
+  
+  .submit-button:disabled {
+    background: #a0aec0;
+    cursor: not-allowed;
+  }
+  
+  /* Animaciones */
+  @keyframes cardEntrance {
+    0% {
+      opacity: 0;
+      transform: translateY(100px) rotateX(-10deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) rotateX(0);
+    }
+  }
+  
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+  
+  .form-group:hover label {
+    color: #667eea;
+  }
+  
+  .form-group input:hover {
+    border-color: #cbd5e0;
+  }
+  
+  @media (max-width: 640px) {
+    .login-card {
+      padding: 1.5rem;
+    }
+  
+    .header-content {
+      padding: 0 1rem;
+    }
+  }
+  
+  /* Efecto de brillo en el botón */
+  .submit-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0)
+    );
+    transform: rotate(75deg);
+    transition: all 0.3s ease;
+  }
+  
+  .submit-button:hover::after {
+    transform: rotate(45deg) translate(50%, 50%);
+  }
+  .success-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideDown 0.5s ease-out;
+  }
+  
+  .success-content {
+    text-align: center;
+  }
+  
+  .success-content h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+  }
+  
+  .success-content p {
+    margin: 0;
+    font-size: 0.9em;
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translate(-50%, -100%);
+      opacity: 0;
+    }
+    to {
+      transform: translate(-50%, 0);
+      opacity: 1;
+    }
+  }

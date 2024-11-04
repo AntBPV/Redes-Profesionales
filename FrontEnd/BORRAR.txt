@@ -1,1 +1,0 @@
-Borren este archivo, únicamente existe para crear la carpeta frontend en GitHub.
