@@ -28,6 +28,7 @@ class PostApiView(APIView):
     def post(self,request,*args,**kwargs):
         data = {
             'user': request.data.get('user'),
+            'profile': request.data.get('profile'),
             'image': request.data.get('image'),
             'text': request.data.get('text'),
         }
