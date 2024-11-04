@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import { HttpClient} from '@angular/common/http';
+import { Observable, of} from 'rxjs';
 import { user } from './redes-profesionales';
+import { PublicacionesComponent } from './publicaciones/publicaciones.component';
+import { publicaciones } from './redes-profesionales';
 
 const API_URL=''
 
@@ -10,8 +12,6 @@ const API_URL=''
 })
 export class redesProfesionalesService {
 
-
-    
   
   constructor(private http:HttpClient) { }
 
@@ -27,5 +27,12 @@ export class redesProfesionalesService {
     return this.http.get<user>(''+'consultar/'+id)
   }
 
+  obtenerPublicaciones(): Observable<publicaciones[]>{
+    return this.http.get<publicaciones[]>(API_URL);
+  }
+
+  crearPublicacion(newUser:publicaciones):Observable<publicaciones>{
+    return this.http.post<publicaciones>('', newUser)
+  } 
 
 }

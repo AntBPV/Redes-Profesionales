@@ -13,3 +13,18 @@ export class user{
         this.id = id;   
     }
 }
+
+export class publicaciones{
+    user: string;
+    image: string;
+    text: string;
+    id: number;
+    
+
+    public constructor(id:number, user: string,image: string, text: string){
+        this.user = user;
+        this.image = image;
+        this.text = text;
+        this.id = id;   
+    }
+}

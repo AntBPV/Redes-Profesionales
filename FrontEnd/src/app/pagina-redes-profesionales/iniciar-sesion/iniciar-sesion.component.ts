@@ -70,7 +70,7 @@ export class IniciarSesionComponent implements OnInit {
               localStorage.setItem('usuarioActual', JSON.stringify(usuarioEncontrado));
               
               setTimeout(() => {
-                this.routerPath.navigate(['/publicacion']); 
+                this.routerPath.navigate(['/inicioPerfil']); 
               }, 2000); 
             } else {
               this.errorLogin = 'Credenciales incorrectas. Por favor, intenta de nuevo.';
