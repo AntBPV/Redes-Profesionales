@@ -1,0 +1,10 @@
+<div *ngIf="post">
+  <h2>{{ post.text }}</h2>
+  <p>User: {{ post.user }}</p>
+  <p>UserProfile: {{ post.UserProfile }}</p>
+  <p>EnterpriseProfile: {{ post.EnterpriseProfile }}</p>
+  <img [src]="post.image" alt="Post Image" *ngIf="post.image" />
+</div>
+<div *ngIf="!post">
+  <p>Post not found</p>
+</div>

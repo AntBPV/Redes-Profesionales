@@ -28,7 +28,8 @@ class PostApiView(APIView):
     def post(self,request,*args,**kwargs):
         data = {
             'user': request.data.get('user'),
-            'profile': request.data.get('profile'),
+            'UserProfile': request.data.get('UserProfile'),
+            'EnterpriseProfile': request.data.get('EnterpriseProfile'),
             'image': request.data.get('image'),
             'text': request.data.get('text'),
         }

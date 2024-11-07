@@ -63,6 +63,7 @@ class ProfileApiView(APIView):
         profile_to_delete.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
+## TODO: Erase all the api views beneath.
 class ProfileApiPrivateView(APIView):
     # Get method for personal profiles. Returns user profile
     def get(self, request, *args, **kwargs):
@@ -90,4 +91,4 @@ class ProfileApiAdminView(APIView):
         else:
             profiles = Profile.objects.all()
             serializer = ProfileSerializer(profiles, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data) 
