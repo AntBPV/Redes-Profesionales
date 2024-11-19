@@ -12,7 +12,7 @@ class EnterpriseProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = EnterpriseProfile
         fields = [
-            'user', 'name', 'backstory', 'picture',
+            'id', 'user', 'name', 'backstory', 'picture',
             'banner', 'company_data'
         ]
     
@@ -28,7 +28,7 @@ class EnterpriseProfileSerializer(serializers.ModelSerializer):
         
         profile = EnterpriseProfile.objects.create(**validated_data)
         
-        CompanyData.objects.create(profile=profile, **company_data)
+        CompanyData.objects.create(enterprise=profile, **company_data)
         
         return profile
     
@@ -40,7 +40,7 @@ class EnterpriseProfileSerializer(serializers.ModelSerializer):
         
         if 'company_data' in validated_data:
             company_data = validated_data.get('company_data')
-            company_data_instance, _ = CompanyData.objects.get_or_create(profile = instance)
+            company_data_instance, _ = CompanyData.objects.get_or_create(enterprise = instance)
             for attr, value in company_data.items():
                 setattr(company_data_instance, attr, value)
             company_data_instance.save()
@@ -49,7 +49,7 @@ class EnterpriseProfileSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         
-        company_data = CompanyData.objects.get(profile = instance)
+        company_data = CompanyData.objects.get(enterprise = instance)
         representation['company_data'] = CompanyDataSerializer(company_data).data
         
         if instance.picture:
