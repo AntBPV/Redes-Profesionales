@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 from post import urls as post_urls
 from UserProfile import urls as profile_urls
@@ -16,4 +18,4 @@ urlpatterns = [
     path('api/e-profile/', include(enterprise_urls)),
     # auth path will be used for the authentication, login and signup of users
     path('api/auth/',include(login_urls)),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

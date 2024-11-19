@@ -13,7 +13,9 @@ import { PostService } from '../post.service';
   styleUrl: './post-list.component.css',
 })
 export class PostListComponent implements OnInit {
+  [x: string]: any;
   posts: Array<Post> = [];
+  baseUrl = 'http://127.0.0.1:8000';
 
   constructor(private routerPath: Router, private postService: PostService) {}
 
@@ -38,5 +40,9 @@ export class PostListComponent implements OnInit {
     this.posts.forEach((post) => {
       console.log(post);
     });
+  }
+
+  getImageUrl(imagePath: string): string {
+    return `${this.baseUrl}${imagePath}`;
   }
 }
