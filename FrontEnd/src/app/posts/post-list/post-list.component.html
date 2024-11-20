@@ -7,7 +7,7 @@
       <div *ngIf="posts.length > 0">
         <ul>
           <div *ngFor="let post of posts">
-            <div class="card mb-2">
+            <div class="card mb-2 hover-effect" (click)="goToDetail(post.id)">
               <div class="card-body">
                 <h3 class="card-text">{{ post.text }}</h3>
               </div>

@@ -20,26 +20,51 @@ import { CommonModule } from '@angular/common';
 })
 export class PostCreateComponent implements OnInit {
   postForm!: FormGroup;
+  selectedImage: File | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.postForm = this.formBuilder.group({
-      User: ['', [Validators.required, Validators.minLength(1)]],
-      UserProfile: ['', [Validators.required, Validators.minLength(1)]],
-      EnterpriseProfile: ['', [Validators.required, Validators.minLength(1)]],
-      image: ['', [Validators.required, Validators.minLength(1)]],
       text: ['', [Validators.required, Validators.minLength(20)]],
+      image: [null],
     });
   }
 
-  createPost(post: Post): void {
-    this.postService.createPost(post).subscribe((createdPost) => {
-      alert('Publicacion creada');
-      this.postForm.reset();
-    });
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+    }
+  }
+
+  createPost() {
+    if (this.postForm.valid) {
+      const formData = new FormData();
+      formData.append('text', this.postForm.get('text')?.value);
+
+      formData.append('UserProfile', '1');
+
+      if (this.selectedImage) {
+        formData.append('image', this.selectedImage);
+      }
+
+      this.postService.createPost(formData).subscribe({
+        next: (createdPost) => {
+          alert('Publicación creada exitosamente');
+          this.router.navigate(['/posts']);
+        },
+        error: (error) => {
+          console.error('Error al crear publicación:', error);
+          alert('Error al crear la publicación. Revisa los datos enviados.');
+        },
+      });
+    } else {
+      alert('Por favor, completa correctamente el formulario.');
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NgIf } from '@angular/common';
 import { Post } from '../posts';
@@ -14,10 +14,12 @@ import { PostService } from '../post.service';
 })
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
+  baseUrl = 'http://127.0.0.1:8000';
 
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService
+    private postService: PostService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -35,5 +37,42 @@ export class PostDetailComponent implements OnInit {
         console.error('Error fetching post details:', error);
       }
     );
+  }
+  getImageUrl(imagePath: string | File | null): string {
+    if (!imagePath) return '';
+
+    if (typeof imagePath === 'string') {
+      return `${this.baseUrl}${imagePath}`;
+    } else {
+      return URL.createObjectURL(imagePath);
+    }
+  }
+
+  deletePost() {
+    if (this.post && this.post.id) {
+      const confirmDelete = confirm(
+        '¿Estás seguro de eliminar esta publicación?'
+      );
+      if (confirmDelete) {
+        this.postService.deletePost(this.post.id).subscribe(
+          () => {
+            this.router.navigate(['/posts']);
+          },
+          (error) => {
+            console.error('Error deleting post', error);
+          }
+        );
+      }
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/posts']);
+  }
+
+  goToUpdate() {
+    if (this.post && this.post.id) {
+      this.router.navigate(['/update-post', this.post.id]);
+    }
   }
 }

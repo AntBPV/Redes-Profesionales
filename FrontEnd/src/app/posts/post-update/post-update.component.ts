@@ -22,17 +22,21 @@ import { CommonModule } from '@angular/common';
 })
 export class PostUpdateComponent implements OnInit {
   postForm!: FormGroup;
-  post: Post = new Post(1, 1, 1, 1, '', '');
+  post: Post | null = null;
+  selectedImage: File | null = null;
   idPost: string = '';
+  currentImage: string | null = null;
+  baseUrl = 'http://127.0.0.1:8000';
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: ActivatedRoute,
-    private postService: PostService
+    private route: ActivatedRoute,
+    private postService: PostService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.router.params.subscribe((params) => {
+    this.route.params.subscribe((params) => {
       this.idPost = params['id'];
 
       this.postService.detailPost(parseInt(this.idPost)).subscribe((pst) => {
@@ -44,32 +48,56 @@ export class PostUpdateComponent implements OnInit {
 
   initForm() {
     this.postForm = this.formBuilder.group({
-      user: [
-        this.post?.user || '',
-        [Validators.required, Validators.minLength(1)],
-      ],
-      UserProfile: [
-        this.post?.UserProfile || '',
-        [Validators.required, Validators.minLength(1)],
-      ],
-      EnterpriseProfile: [
-        this.post?.EnterpriseProfile || '',
-        [Validators.required, Validators.minLength(1)],
-      ],
-      image: [
-        this.post?.image || '',
-        [Validators.required, Validators.minLength(1)],
-      ],
       text: [
         this.post?.text || '',
         [Validators.required, Validators.minLength(20)],
       ],
+      image: [this.currentImage], // Inicializar con la imagen actual
     });
   }
 
-  updatePost(post: Post) {
-    this.postService.updatePost(this.post.id, post).subscribe((ps) => {
-      alert('Publicacion Actualizada');
-    });
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedImage = event.target.files[0];
+    }
+  }
+
+  updatePost() {
+    if (this.postForm.valid && this.post) {
+      const formData = new FormData();
+
+      formData.append('text', this.postForm.get('text')?.value);
+
+      if (this.selectedImage) {
+        formData.append('image', this.selectedImage);
+      }
+
+      this.postService.updatePost(this.post.id, formData).subscribe({
+        next: (updatedPost) => {
+          alert('Publicación actualizada exitosamente');
+          this.router.navigate(['/posts']); // O a donde necesites
+        },
+        error: (error) => {
+          console.error('Error al actualizar publicación:', error);
+          alert('Error al actualizar la publicación');
+        },
+      });
+    } else {
+      this.postForm.markAllAsTouched();
+    }
+  }
+
+  getImageUrl(imagePath: string | File | null): string {
+    if (!imagePath) return '';
+
+    if (typeof imagePath === 'string') {
+      return `${this.baseUrl}${imagePath}`;
+    } else {
+      return URL.createObjectURL(imagePath);
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/posts', this.post?.id]);
   }
 }

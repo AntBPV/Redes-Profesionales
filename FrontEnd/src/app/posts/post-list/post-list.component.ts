@@ -17,7 +17,11 @@ export class PostListComponent implements OnInit {
   posts: Array<Post> = [];
   baseUrl = 'http://127.0.0.1:8000';
 
-  constructor(private routerPath: Router, private postService: PostService) {}
+  constructor(
+    private routerPath: Router,
+    private postService: PostService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getPosts();
@@ -42,7 +46,16 @@ export class PostListComponent implements OnInit {
     });
   }
 
-  getImageUrl(imagePath: string): string {
-    return `${this.baseUrl}${imagePath}`;
+  getImageUrl(imagePath: string | File | null): string {
+    if (!imagePath) return '';
+
+    if (typeof imagePath === 'string') {
+      return `${this.baseUrl}${imagePath}`;
+    } else {
+      return URL.createObjectURL(imagePath);
+    }
+  }
+  goToDetail(postId: number) {
+    this.router.navigate(['/posts', postId]);
   }
 }

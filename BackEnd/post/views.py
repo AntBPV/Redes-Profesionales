@@ -30,9 +30,10 @@ class PostApiView(APIView):
             'user': request.data.get('user'),
             'UserProfile': request.data.get('UserProfile'),
             'EnterpriseProfile': request.data.get('EnterpriseProfile'),
-            'image': request.data.get('image'),
             'text': request.data.get('text'),
+            'image': request.data.get('image'),
         }
+        
         serializer = post_serializer(data=data)
         
         # This will validate the data and return the correct response

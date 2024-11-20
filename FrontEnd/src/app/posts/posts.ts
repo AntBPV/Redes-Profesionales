@@ -3,7 +3,7 @@ export class Post {
   user: number;
   UserProfile: number;
   EnterpriseProfile: number;
-  image: string;
+  image?: File | string;
   text: string;
 
   constructor(
