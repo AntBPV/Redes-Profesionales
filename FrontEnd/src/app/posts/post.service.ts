@@ -7,7 +7,8 @@ import { Post } from './posts';
   providedIn: 'root',
 })
 export class PostService {
-  private API_URL = 'http://127.0.0.1:8000/api/post/list';
+  private API_URL =
+    'https://redesbackend-bvdwf3csceg5c8fr.eastus2-01.azurewebsites.net/api/post/list';
 
   constructor(private http: HttpClient) {}
 

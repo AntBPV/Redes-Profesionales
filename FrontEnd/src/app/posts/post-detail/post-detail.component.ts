@@ -14,7 +14,8 @@ import { PostService } from '../post.service';
 })
 export class PostDetailComponent implements OnInit {
   post: Post | null = null;
-  baseUrl = 'http://127.0.0.1:8000';
+  baseUrl =
+    'https://redesbackend-bvdwf3csceg5c8fr.eastus2-01.azurewebsites.net';
 
   constructor(
     private route: ActivatedRoute,

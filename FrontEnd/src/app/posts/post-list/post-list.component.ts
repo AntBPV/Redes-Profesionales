@@ -15,7 +15,8 @@ import { PostService } from '../post.service';
 export class PostListComponent implements OnInit {
   [x: string]: any;
   posts: Array<Post> = [];
-  baseUrl = 'http://127.0.0.1:8000';
+  baseUrl =
+    'https://redesbackend-bvdwf3csceg5c8fr.eastus2-01.azurewebsites.net';
 
   constructor(
     private routerPath: Router,
