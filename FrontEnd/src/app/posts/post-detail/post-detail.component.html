@@ -1,0 +1,23 @@
+<div class="col-lg-6 offset-3">
+  <div *ngIf="post">
+    <div class="card mb-2">
+      <button class="btn btn-secondary" (click)="goBack()">Volver</button>
+      <div class="card-body">
+        <h3 class="card-text">{{ post.text }}</h3>
+      </div>
+      <img
+        class="card-img-bottom"
+        [src]="getImageUrl(post.image)"
+        alt="Post Image"
+        *ngIf="post.image"
+      />
+      <div>
+        <button class="btn btn-danger" (click)="deletePost()">Eliminar</button>
+        <button class="btn btn-info" (click)="goToUpdate()">Actualizar</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!post">
+    <p>Post not found</p>
+  </div>
+</div>

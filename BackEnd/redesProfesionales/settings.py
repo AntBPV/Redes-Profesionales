@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-u@&^cehio8958d(^n=a@(1g704s_x3!1zy2th5si0^m1&@ok-s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -40,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'post',
     'UserProfile',
+    'EnterpriseProfile',
     'LoginApi',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'redesProfesionales.urls'
@@ -82,10 +85,10 @@ WSGI_APPLICATION = 'redesProfesionales.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dbRedes',
-        'USER': 'postgres',
+        'NAME': 'redesDb',
+        'USER': 'antonparra',
         'PASSWORD': 'Pe1140214007=',
-        'HOST': 'localhost',
+        'HOST': 'anthonydatabase.postgres.database.azure.com',
         'PORT': '5432',
     }
 }
@@ -127,7 +130,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOCAL_STATIC_CDN_PATH = os.path.join(os.path.dirname(BASE_DIR), 'django_static_cdn')
+LOCAL_STATIC_CDN_PATH = 'django_static_cdn'
 
 STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static') #live cdn AWS S3
 STATIC_DIRS = [
@@ -141,3 +144,5 @@ MEDIA_URL =  '/media/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_ALL_ORIGINS = True

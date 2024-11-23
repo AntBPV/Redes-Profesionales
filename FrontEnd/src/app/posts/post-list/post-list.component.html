@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="col-lg-6 offset-3">
+    <header>
+      <h1>Publicaciones</h1>
+    </header>
+    <div class="col-12">
+      <div *ngIf="posts.length > 0">
+        <ul>
+          <div *ngFor="let post of posts">
+            <div class="card mb-2 hover-effect" (click)="goToDetail(post.id)">
+              <div class="card-body">
+                <h3 class="card-text">{{ post.text }}</h3>
+              </div>
+              <img
+                class="card-img-bottom"
+                [src]="getImageUrl(post.image)"
+                alt="Post Image"
+                *ngIf="post.image"
+              />
+            </div>
+          </div>
+        </ul>
+      </div>
+      <div *ngIf="posts.length === 0">
+        <p>No posts found.</p>
+      </div>
+    </div>
+  </div>
+</div>

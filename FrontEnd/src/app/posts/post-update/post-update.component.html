@@ -1,0 +1,63 @@
+<div class="container mt-4">
+  <h2>Actualizar Publicación</h2>
+
+  <form [formGroup]="postForm" (ngSubmit)="updatePost()" *ngIf="post">
+    <div class="form-group">
+      <label for="text">Texto de la publicación</label>
+      <textarea
+        id="text"
+        formControlName="text"
+        class="form-control"
+        placeholder="Escribe tu publicación"
+        rows="4"
+      ></textarea>
+      <div
+        *ngIf="postForm.get('text')?.invalid && postForm.get('text')?.touched"
+        class="text-danger"
+      >
+        <small *ngIf="postForm.get('text')?.errors?.['required']"
+          >El texto es obligatorio</small
+        >
+        <small *ngIf="postForm.get('text')?.errors?.['minlength']"
+          >El texto debe tener al menos 20 caracteres</small
+        >
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="currentImage">
+      <label>Imagen actual:</label>
+      <img
+        [src]="getImageUrl(currentImage)"
+        class="img-thumbnail mb-2"
+        style="max-width: 200px"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="image">Nueva imagen (opcional)</label>
+      <input
+        type="file"
+        id="image"
+        (change)="onFileSelected($event)"
+        class="form-control-file"
+        accept="image/*"
+      />
+      <small class="text-muted"
+        >Deja vacío este campo si deseas mantener la imagen actual</small
+      >
+    </div>
+
+    <div class="mt-3">
+      <button
+        type="submit"
+        class="btn btn-primary me-2"
+        [disabled]="postForm.invalid"
+      >
+        Actualizar Publicación
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="goBack()">
+        Cancelar
+      </button>
+    </div>
+  </form>
+</div>
