@@ -68,6 +68,7 @@ export class PostUpdateComponent implements OnInit {
       const formData = new FormData();
 
       formData.append('text', this.postForm.get('text')?.value);
+      formData.append('UserProfile', '1');
 
       if (this.selectedImage) {
         formData.append('image', this.selectedImage);
